@@ -8,13 +8,26 @@
 import SwiftUI
 
 struct DashboardCell: View {
+    let task: TaskDetail
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(task.title)
+            .background {
+                NavigationLink(
+                    "",
+                    destination: TaskDetailView(
+                        viewModel: TaskDetailViewModel(
+                            taskDetail: task,
+                            isNewTask: false)
+                    )
+                )
+                .opacity(0)
+            }
     }
 }
 
 struct DashboardCell_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardCell()
+        DashboardCell(task: sampleTask)
     }
 }

@@ -13,7 +13,7 @@ struct ToDoApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootNavigation()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
