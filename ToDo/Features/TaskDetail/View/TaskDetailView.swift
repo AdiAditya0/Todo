@@ -30,7 +30,7 @@ struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
             Text("Description")
                 .font(.title3)
                 .bold()
-            TextEditor(text: $viewModel.taskDetail.description)
+            TextEditor(text: $viewModel.taskDetail.taskDescription)
                 .padding(3)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
@@ -41,17 +41,11 @@ struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
             Text("CheckList")
                 .font(.title3)
                 .bold()
-            List(self.viewModel.taskDetail.checkList, id: \.id) { item in
+            List(self.viewModel.taskDetail.checkListItems, id: \.id) { item in
                 ChecklistCell(item: item)
             }
             
             Button("Add new Item") {
-                viewModel.taskDetail.checkList.append(
-                    CheckListItem(
-                        name: "New Item",
-                        status: .pending
-                    )
-                )
             }
             .buttonStyle(.borderedProminent)
             .frame(maxWidth: .infinity)
@@ -61,11 +55,11 @@ struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
     }
 }
 
-struct TaskDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskDetailView(viewModel: TaskDetailViewModel(
-            taskDetail: sampleTask,
-            isNewTask: false)
-        )
-    }
-}
+//struct TaskDetail_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TaskDetailView(viewModel: TaskDetailViewModel(
+//            taskDetail: sampleTask,
+//            isNewTask: false)
+//        )
+//    }
+//}

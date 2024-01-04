@@ -19,12 +19,12 @@ class DashboardViewModel: ObservableObject {
     
     func retrieveSavedTasks() {
         let fetchRequest: NSFetchRequest<TaskDetail>
-        fetchRequest = Entity.fetchRequest()
+        fetchRequest = TaskDetail.fetchRequest()
 
-        // Get a reference to a NSManagedObjectContext
-        let context = persistentContainer.viewContext
-
-        // Fetch all objects of one Entity type
-        let objects = try context.fetch(fetchRequest)
+//        // Get a reference to a NSManagedObjectContext
+//        let context = persistentContainer.viewContext
+//
+//        // Fetch all objects of one Entity type
+//        let objects = try context.fetch(fetchRequest)
     }
 }

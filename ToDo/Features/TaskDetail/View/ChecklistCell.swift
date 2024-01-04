@@ -11,13 +11,15 @@ struct ChecklistCell: View {
     let item: CheckListItem
     
     func getBackgroundColor() -> Color {
-        switch item.status {
+        switch CheckListItemStatus(rawValue: item.status) {
         case .pending:
             return Color.orange
         case .complete:
             return Color.green
         case .cancelled:
             return Color.red
+        default:
+            return Color.white
         }
     }
     
@@ -26,12 +28,6 @@ struct ChecklistCell: View {
             .padding(5)
             .cornerRadius(8)
             .listRowBackground(getBackgroundColor())
-            .strikethrough(item.status == .cancelled)
-    }
-}
-
-struct ChecklistCell_Previews: PreviewProvider {
-    static var previews: some View {
-        ChecklistCell(item: CheckListItem(name: "Hello", status: .pending))
+            .strikethrough(CheckListItemStatus(rawValue: item.status) == .cancelled)
     }
 }

@@ -26,8 +26,8 @@ struct DashboardCell: View {
     }
 }
 
-struct DashboardCell_Previews: PreviewProvider {
-    static var previews: some View {
-        DashboardCell(task: sampleTask)
-    }
-}
+//struct DashboardCell_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DashboardCell(task: sampleTask)
+//    }
+//}
