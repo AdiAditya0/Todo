@@ -58,12 +58,6 @@ struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
         }
         .padding(12)
         .navigationTitle("Task")
-        .onAppear {
-            print("appear")
-        }
-        .onDisappear {
-            print("jfhggh")
-        }
     }
 }
 

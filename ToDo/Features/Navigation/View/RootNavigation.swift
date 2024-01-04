@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct RootNavigation: View {
+    var dashboardViewModel = DashboardViewModel()
     var body: some View {
         NavigationView {
-            DashboardView()
+            DashboardView(viewModel: dashboardViewModel)
                 .navigationTitle("Dashboard")
         }
     }
