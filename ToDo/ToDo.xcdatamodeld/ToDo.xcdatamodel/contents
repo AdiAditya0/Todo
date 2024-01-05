@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="CheckListItem" representedClassName="CheckListItem" syncable="YES">
+    <entity name="CheckListItemMO" representedClassName=".CheckListItemMO" syncable="YES" codeGenerationType="class">
         <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="taskRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TaskDetail" inverseName="checkListRelation" inverseEntity="TaskDetail"/>
+        <relationship name="taskRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TaskDetailMO" inverseName="checkListRelation" inverseEntity="TaskDetailMO"/>
     </entity>
-    <entity name="TaskDetail" representedClassName="TaskDetail" syncable="YES">
+    <entity name="TaskDetailMO" representedClassName=".TaskDetailMO" syncable="YES" codeGenerationType="class">
         <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="taskDescription" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="checkListRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CheckListItem" inverseName="taskRelation" inverseEntity="CheckListItem"/>
+        <relationship name="checkListRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CheckListItemMO" inverseName="taskRelation" inverseEntity="CheckListItemMO"/>
     </entity>
 </model>

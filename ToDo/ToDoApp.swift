@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct ToDoApp: App {
-    let persistenceController = PersistenceController.shared
+    let persistenceStore = PersistenceStore(inMemory: false)
 
     var body: some Scene {
         WindowGroup {
             RootNavigation()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, persistenceStore.container.viewContext)
         }
     }
 }
