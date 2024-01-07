@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct RootNavigation: View {
-    var dashboardViewModel = DashboardViewModel()
+    @Environment(\.managedObjectContext) var managedObjectContext
+    
     var body: some View {
         NavigationView {
-            DashboardView(viewModel: dashboardViewModel)
+            DashboardView(viewModel: DashboardViewModel(context: managedObjectContext))
                 .navigationTitle("Dashboard")
         }
     }

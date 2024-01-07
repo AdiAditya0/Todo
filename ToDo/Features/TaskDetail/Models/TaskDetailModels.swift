@@ -22,10 +22,20 @@ struct CheckListItem: Codable, Identifiable {
 
 struct TaskDetail: Codable, Identifiable {
     var id = UUID()
-    let title: String
-    let description: String
-    let checkList: [CheckListItem]
-    let dateCreated: Date
+    var title: String
+    var description: String
+    var checkList: [CheckListItem]
+    var dateCreated: Date
+}
+
+extension TaskDetail {
+    init(taskDetailMO: TaskDetailMO) {
+        self.id = taskDetailMO.id ?? UUID()
+        self.title = taskDetailMO.title ?? ""
+        self.description = taskDetailMO.taskDescription ?? ""
+        self.checkList = []
+        self.dateCreated = taskDetailMO.dateCreated ?? Date.now
+    }
 }
 
 let sampleTask = TaskDetail(

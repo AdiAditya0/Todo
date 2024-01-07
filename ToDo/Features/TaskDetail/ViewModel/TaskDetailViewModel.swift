@@ -24,10 +24,6 @@ class TaskDetailViewModel: TaskDetailViewModelProtocol {
         self.isNewTask = isNewTask
     }
     
-    deinit {
-        print(">>>>>")
-    }
-    
     func createTask() { }
     
     func updateTaskDetails() { }

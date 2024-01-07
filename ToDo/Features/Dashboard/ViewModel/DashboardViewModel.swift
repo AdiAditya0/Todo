@@ -7,24 +7,31 @@
 
 import Foundation
 import CoreData
-import SwiftUI
 
 class DashboardViewModel: ObservableObject {
     @Published var tasks: [TaskDetail] = []
-    @Environment(\.managedObjectContext) var managedObjectContext
+    var context: NSManagedObjectContext
     
-    init() {
-        
+    init(context: NSManagedObjectContext) {
+        self.context = context
     }
     
     func retrieveSavedTasks() {
-        let fetchRequest: NSFetchRequest<TaskDetail>
-        fetchRequest = TaskDetail.fetchRequest()
+        let fetchRequest: NSFetchRequest<TaskDetailMO>
+        fetchRequest = TaskDetailMO.fetchRequest()
 
-//        // Get a reference to a NSManagedObjectContext
-//        let context = persistentContainer.viewContext
-//
-//        // Fetch all objects of one Entity type
-//        let objects = try context.fetch(fetchRequest)
+        // Fetch all objects of one Entity type
+        if let objects = try? context.fetch(fetchRequest) {
+            self.tasks = objects.map {
+                return TaskDetail(taskDetailMO: $0)
+            }
+        }
+    }
+    
+    func addTask() {
+        let tMO = TaskDetailMO(context: context)
+        tMO.title = "abc"
+        try? context.save()
+        retrieveSavedTasks()
     }
 }

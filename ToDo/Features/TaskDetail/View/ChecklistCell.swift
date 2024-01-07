@@ -11,7 +11,7 @@ struct ChecklistCell: View {
     let item: CheckListItem
     
     func getBackgroundColor() -> Color {
-        switch CheckListItemStatus(rawValue: item.status) {
+        switch item.status {
         case .pending:
             return Color.orange
         case .complete:
@@ -28,6 +28,6 @@ struct ChecklistCell: View {
             .padding(5)
             .cornerRadius(8)
             .listRowBackground(getBackgroundColor())
-            .strikethrough(CheckListItemStatus(rawValue: item.status) == .cancelled)
+            .strikethrough(item.status == .cancelled)
     }
 }

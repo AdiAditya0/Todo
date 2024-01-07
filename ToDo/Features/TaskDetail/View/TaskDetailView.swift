@@ -30,7 +30,7 @@ struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
             Text("Description")
                 .font(.title3)
                 .bold()
-            TextEditor(text: $viewModel.taskDetail.taskDescription)
+            TextEditor(text: $viewModel.taskDetail.description)
                 .padding(3)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
@@ -41,7 +41,7 @@ struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
             Text("CheckList")
                 .font(.title3)
                 .bold()
-            List(self.viewModel.taskDetail.checkListItems, id: \.id) { item in
+            List(self.viewModel.taskDetail.checkList, id: \.id) { item in
                 ChecklistCell(item: item)
             }
             
