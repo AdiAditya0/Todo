@@ -10,13 +10,14 @@ import CoreData
 
 struct DashboardView: View {
     @ObservedObject var viewModel: DashboardViewModel
+    @Environment(\.managedObjectContext) var managedObjectContext
     
     var body: some View {
         ZStack {
             List(viewModel.tasks, id: \.id) { item in
                 DashboardCell(task: item)
             }
-            FloatingButton(icon: "plus")
+            FloatingButton(icon: "plus", context: managedObjectContext)
         }
         .onAppear {
             viewModel.retrieveSavedTasks()
@@ -26,6 +27,7 @@ struct DashboardView: View {
 
 struct FloatingButton: View {
     let icon: String
+    var context: NSManagedObjectContext
     var body: some View {
         VStack {
             Spacer()
@@ -34,12 +36,13 @@ struct FloatingButton: View {
                 NavigationLink(
                     destination: TaskDetailView(
                         viewModel: TaskDetailViewModel(
+                            context: context,
                             taskDetail: TaskDetail(
                                 title: "",
                                 description: "",
                                 checkList: [],
                                 dateCreated: Date.now),
-                            isNewTask: false)
+                            isNewTask: true)
                     )
                 ) {
                     Image(systemName: "plus")

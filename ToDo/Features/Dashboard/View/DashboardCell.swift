@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DashboardCell: View {
     let task: TaskDetail
+    @Environment(\.managedObjectContext) var managedObjectContext
     
     var body: some View {
         Text(task.title)
@@ -17,6 +18,7 @@ struct DashboardCell: View {
                     "",
                     destination: TaskDetailView(
                         viewModel: TaskDetailViewModel(
+                            context: managedObjectContext,
                             taskDetail: task,
                             isNewTask: false)
                     )

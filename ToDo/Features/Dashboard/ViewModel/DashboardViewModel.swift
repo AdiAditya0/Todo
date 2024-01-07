@@ -27,11 +27,4 @@ class DashboardViewModel: ObservableObject {
             }
         }
     }
-    
-    func addTask() {
-        let tMO = TaskDetailMO(context: context)
-        tMO.title = "abc"
-        try? context.save()
-        retrieveSavedTasks()
-    }
 }

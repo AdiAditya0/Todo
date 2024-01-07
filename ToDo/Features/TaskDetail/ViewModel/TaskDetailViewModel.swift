@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import CoreData
 
 protocol TaskDetailViewModelProtocol: ObservableObject {
     var taskDetail: TaskDetail { get set }
+    var context: NSManagedObjectContext { get set }
+    var isNewTask: Bool { get set }
     func createTask() -> Void
     func updateTaskDetails() -> Void
     func deleteTask() -> Void
@@ -17,14 +20,26 @@ protocol TaskDetailViewModelProtocol: ObservableObject {
 class TaskDetailViewModel: TaskDetailViewModelProtocol {
     
     @Published var taskDetail: TaskDetail
-    let isNewTask: Bool
+    @Published var isNewTask: Bool
+    var context: NSManagedObjectContext
     
-    init(taskDetail: TaskDetail, isNewTask: Bool) {
+    init(context: NSManagedObjectContext, taskDetail: TaskDetail, isNewTask: Bool) {
+        self.context = context
         self.taskDetail = taskDetail
         self.isNewTask = isNewTask
     }
     
-    func createTask() { }
+    func createTask() {
+        if self.taskDetail.title != "" {
+            let tMO = TaskDetailMO(context: context)
+            tMO.title = self.taskDetail.title
+            tMO.id = self.taskDetail.id
+            tMO.taskDescription = self.taskDetail.description
+            tMO.dateCreated = self.taskDetail.dateCreated
+            try? context.save()
+            isNewTask = false
+        }
+    }
     
     func updateTaskDetails() { }
     

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
     @ObservedObject private var viewModel: T
+    @FocusState private var keyboardFocused
     
     init(viewModel: T) {
         self.viewModel = viewModel
@@ -25,6 +26,12 @@ struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(.black, lineWidth: 1)
                 )
+                .focused($keyboardFocused)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        keyboardFocused = true
+                    }
+                }
             
             Spacer(minLength: 20)
             Text("Description")
@@ -52,6 +59,15 @@ struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
         }
         .padding(12)
         .navigationTitle("Task")
+        .toolbar {
+            if viewModel.isNewTask {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        viewModel.createTask()
+                    }
+                }
+            }
+        }
     }
 }
 
