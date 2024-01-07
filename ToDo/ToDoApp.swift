@@ -9,12 +9,9 @@ import SwiftUI
 
 @main
 struct ToDoApp: App {
-    let persistenceStore = PersistenceStore(inMemory: false)
-
     var body: some Scene {
         WindowGroup {
             RootNavigation()
-                .environment(\.managedObjectContext, persistenceStore.container.viewContext)
         }
     }
 }

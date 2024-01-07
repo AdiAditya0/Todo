@@ -10,14 +10,13 @@ import CoreData
 
 struct DashboardView: View {
     @ObservedObject var viewModel: DashboardViewModel
-    @Environment(\.managedObjectContext) var managedObjectContext
     
     var body: some View {
         ZStack {
             List(viewModel.tasks, id: \.id) { item in
                 DashboardCell(task: item)
             }
-            FloatingButton(icon: "plus", context: managedObjectContext)
+            FloatingButton(icon: "plus")
         }
         .onAppear {
             viewModel.retrieveSavedTasks()
@@ -27,24 +26,25 @@ struct DashboardView: View {
 
 struct FloatingButton: View {
     let icon: String
-    var context: NSManagedObjectContext
+    
     var body: some View {
         VStack {
             Spacer()
             HStack {
                 Spacer()
-                NavigationLink(
-                    destination: TaskDetailView(
-                        viewModel: TaskDetailViewModel(
-                            context: context,
-                            taskDetail: TaskDetail(
-                                title: "",
-                                description: "",
-                                checkList: [],
-                                dateCreated: Date.now),
-                            isNewTask: true)
+                NavigationLink {
+                    NavigationLazyView(
+                        TaskDetailView(
+                            viewModel: TaskDetailViewModel(
+                                taskDetail: TaskDetail(
+                                    title: "",
+                                    description: "",
+                                    checkList: [],
+                                    dateCreated: Date.now),
+                                isNewTask: true)
+                        )
                     )
-                ) {
+                } label: {
                     Image(systemName: "plus")
                         .font(.title2.weight(.bold))
                         .foregroundColor(.white)
@@ -54,13 +54,14 @@ struct FloatingButton: View {
                         .shadow(radius: 5, x: 0, y: 3)
                         .padding()
                 }
+                .isDetailLink(false)
             }
         }
     }
 }
 
-struct DashboardView_Previews: PreviewProvider {
-    static var previews: some View {
-        DashboardView(viewModel: DashboardViewModel(context: NSManagedObjectContext()))
-    }
-}
+//struct DashboardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DashboardView(viewModel: DashboardViewModel(context: NSManagedObjectContext()))
+//    }
+//}

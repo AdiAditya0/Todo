@@ -10,10 +10,10 @@ import CoreData
 
 class DashboardViewModel: ObservableObject {
     @Published var tasks: [TaskDetail] = []
-    var context: NSManagedObjectContext
+    var context: NSManagedObjectContext?
     
-    init(context: NSManagedObjectContext) {
-        self.context = context
+    init() {
+        self.context = PersistenceStore(inMemory: false).context
     }
     
     func retrieveSavedTasks() {
@@ -21,7 +21,7 @@ class DashboardViewModel: ObservableObject {
         fetchRequest = TaskDetailMO.fetchRequest()
 
         // Fetch all objects of one Entity type
-        if let objects = try? context.fetch(fetchRequest) {
+        if let objects = try? context?.fetch(fetchRequest) {
             self.tasks = objects.map {
                 return TaskDetail(taskDetailMO: $0)
             }

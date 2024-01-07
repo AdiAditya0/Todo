@@ -13,6 +13,7 @@ struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
     
     init(viewModel: T) {
         self.viewModel = viewModel
+        print("new")
     }
     
     var body: some View {

@@ -9,18 +9,18 @@ import SwiftUI
 
 struct DashboardCell: View {
     let task: TaskDetail
-    @Environment(\.managedObjectContext) var managedObjectContext
     
     var body: some View {
         Text(task.title)
             .background {
                 NavigationLink(
                     "",
-                    destination: TaskDetailView(
-                        viewModel: TaskDetailViewModel(
-                            context: managedObjectContext,
-                            taskDetail: task,
-                            isNewTask: false)
+                    destination: NavigationLazyView(
+                        TaskDetailView(
+                            viewModel: TaskDetailViewModel(
+                                taskDetail: task,
+                                isNewTask: false)
+                        )
                     )
                 )
                 .opacity(0)

@@ -7,13 +7,23 @@
 
 import SwiftUI
 
+struct NavigationLazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+    var body: Content {
+        build()
+    }
+}
+
 struct RootNavigation: View {
-    @Environment(\.managedObjectContext) var managedObjectContext
     
     var body: some View {
-        NavigationView {
-            DashboardView(viewModel: DashboardViewModel(context: managedObjectContext))
+        NavigationStack {
+            DashboardView(viewModel: DashboardViewModel())
                 .navigationTitle("Dashboard")
+                .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }

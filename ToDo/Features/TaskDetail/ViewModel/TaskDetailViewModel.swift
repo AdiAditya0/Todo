@@ -23,10 +23,14 @@ class TaskDetailViewModel: TaskDetailViewModelProtocol {
     @Published var isNewTask: Bool
     var context: NSManagedObjectContext
     
-    init(context: NSManagedObjectContext, taskDetail: TaskDetail, isNewTask: Bool) {
-        self.context = context
+    init(taskDetail: TaskDetail, isNewTask: Bool) {
+        self.context = PersistenceStore(inMemory: false).context
         self.taskDetail = taskDetail
         self.isNewTask = isNewTask
+    }
+    
+    deinit {
+        print("Denint")
     }
     
     func createTask() {
