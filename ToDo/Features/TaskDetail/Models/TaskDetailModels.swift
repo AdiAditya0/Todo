@@ -14,14 +14,14 @@ enum CheckListItemStatus: Int64, Codable {
 }
 
 struct CheckListItem: Codable, Identifiable {
-    var id = UUID()
+    var id: String = UUID().uuidString
     let name: String
     let status: CheckListItemStatus
     let dateCreated: Date
 }
 
 struct TaskDetail: Codable, Identifiable {
-    var id = UUID()
+    var id: String = UUID().uuidString
     var title: String
     var description: String
     var checkList: [CheckListItem]
@@ -30,11 +30,22 @@ struct TaskDetail: Codable, Identifiable {
 
 extension TaskDetail {
     init(taskDetailMO: TaskDetailMO) {
-        self.id = taskDetailMO.id ?? UUID()
+        self.id = taskDetailMO.id ?? UUID().uuidString
         self.title = taskDetailMO.title ?? ""
         self.description = taskDetailMO.taskDescription ?? ""
-        self.checkList = []
+        self.checkList = (taskDetailMO.checkListRelation?.allObjects as? [CheckListItemMO])?.map {
+            return CheckListItem(checkListItemMO: $0)
+        } ?? []
         self.dateCreated = taskDetailMO.dateCreated ?? Date.now
+    }
+}
+
+extension CheckListItem {
+    init(checkListItemMO: CheckListItemMO) {
+        self.id = checkListItemMO.id ?? UUID().uuidString
+        self.name = checkListItemMO.name ?? ""
+        self.status = CheckListItemStatus(rawValue: checkListItemMO.status) ?? .pending
+        self.dateCreated = checkListItemMO.dateCreated ?? Date.now
     }
 }
 

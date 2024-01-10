@@ -54,6 +54,7 @@ struct TaskDetailView<T: TaskDetailViewModelProtocol>: View {
             }
             
             Button("Add new Item") {
+                viewModel.addCheckListItem()
             }
             .buttonStyle(.borderedProminent)
             .frame(maxWidth: .infinity)

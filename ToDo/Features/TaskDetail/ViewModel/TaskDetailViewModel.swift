@@ -15,6 +15,7 @@ protocol TaskDetailViewModelProtocol: ObservableObject {
     func createTask() -> Void
     func updateTaskDetails() -> Void
     func deleteTask() -> Void
+    func addCheckListItem() -> Void
 }
 
 class TaskDetailViewModel: TaskDetailViewModelProtocol {
@@ -42,6 +43,25 @@ class TaskDetailViewModel: TaskDetailViewModelProtocol {
             tMO.dateCreated = self.taskDetail.dateCreated
             try? context.save()
             isNewTask = false
+        }
+    }
+    
+    func addCheckListItem() {
+        let request: NSFetchRequest<TaskDetailMO> = TaskDetailMO.fetchRequest()
+        request.predicate = NSPredicate(format: "id = %@", taskDetail.id)
+        
+        do {
+            if let fetchedtask = try context.fetch(request).first {
+                let checkListItem = CheckListItemMO(context: context)
+                checkListItem.id = UUID().uuidString
+                checkListItem.dateCreated = Date.now
+                checkListItem.name = "abc"
+                checkListItem.status = CheckListItemStatus.pending.rawValue
+                fetchedtask.addToCheckListRelation(checkListItem)
+                try context.save()
+            }
+        } catch let error {
+            print("Error fetching singers \(error)")
         }
     }
     
